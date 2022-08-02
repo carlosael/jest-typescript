@@ -1,6 +1,6 @@
 import { Product } from './product';
 
-const createSut = (name: string, price: number) => {
+const createSut = (name: string, price: number): Product => {
   return new Product(name, price);
 };
 

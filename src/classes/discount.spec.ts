@@ -1,15 +1,29 @@
-import { Product } from './product';
+import {
+  Discount,
+  FiftyPercentDiscount,
+  NoDiscount,
+  TenPercentDiscount,
+} from './discount';
 
-const createSut = (name: string, price: number) => {
-  return new Product(name, price);
+const createSut = (className: new () => Discount): Discount => {
+  return new className();
 };
 
-describe('Product', () => {
+describe('Discount', () => {
   afterEach(() => jest.clearAllMocks());
 
-  it('should have properties name and price', () => {
-    const sut = createSut('Shirt', 10);
-    expect(sut).toHaveProperty('name', 'Shirt');
-    expect(sut).toHaveProperty('price', 10);
+  it('should have no discount', () => {
+    const sut = createSut(NoDiscount);
+    expect(sut.calculate(10)).toBe(10);
+  });
+
+  it('should apply 50% discount on price', () => {
+    const sut = createSut(FiftyPercentDiscount);
+    expect(sut.calculate(10)).toBe(5);
+  });
+
+  it('should apply 10% discount on price', () => {
+    const sut = createSut(TenPercentDiscount);
+    expect(sut.calculate(10)).toBe(9);
   });
 });
