@@ -1,28 +1,28 @@
-import { Persistency } from './persistency';
+import { Messaging } from './messaging';
 
 const createSut = () => {
-  return new Persistency();
+  return new Messaging();
 };
 
-describe('Persistency', () => {
+describe('Messaging', () => {
   afterEach(() => jest.clearAllMocks());
 
   it('should return undefined', () => {
     const sut = createSut();
-    expect(sut.saveOrder()).toBeUndefined();
+    expect(sut.sendMessage('teste')).toBeUndefined();
   });
 
   it('should call console.log once', () => {
     const sut = createSut();
     const consoleSpy = jest.spyOn(console, 'log');
-    sut.saveOrder();
+    sut.sendMessage('teste');
     expect(consoleSpy).toHaveBeenCalledTimes(1);
   });
 
-  it('should call console.log with "Order saved"', () => {
+  it('should call console.log with ""Message sent:", message"', () => {
     const sut = createSut();
     const consoleSpy = jest.spyOn(console, 'log');
-    sut.saveOrder();
-    expect(consoleSpy).toHaveBeenCalledWith('Order saved');
+    sut.sendMessage('teste');
+    expect(consoleSpy).toHaveBeenCalledWith('Message sent:', 'teste');
   });
 });
